@@ -1,3 +1,3 @@
-# Quiizical React App Solo
+# Quizzical React App Solo
 Initial Push
 React, State, Fetching
