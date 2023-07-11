@@ -7,10 +7,15 @@ html {
   margin: 0;
 }
 body {
+  background: #f5f7fb;
+  background-image: url("./images/blobs.png"), url("./images/blobs1.png");
+  background-position: top right, bottom left;
+  background-repeat: no-repeat;
   color: #293264;
   font-family: Karla, sans-serif;
   line-height: 1.4em;
   font-size: 0.9em;
+  min-height: 100vh;
 }
 h3 {
   font-size: 2em;
@@ -45,19 +50,11 @@ button {
   justify-content: center;
   align-items: center;
   min-height: 550px;
-  background: #f5f7fb;
-  background-image: url("./images/blobs.png"), url("./images/blobs1.png");
-  background-repeat: no-repeat;
-  background-position: top right, bottom left;
 }
 
 .quiz-container {
   display: flex;
   flex-direction: column;
-  background: #f5f7fb;
-  background-image: url("./images/blobs.png"), url("./images/blobs1.png");
-  background-repeat: no-repeat;
-  background-position: top right, bottom left;
   padding: 30px;
 }
 
