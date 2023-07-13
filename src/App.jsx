@@ -15,19 +15,20 @@ function App() {
   };
 
   const [quizData, setQuizData] = useState(initialState);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  function startQuiz() {
+  const { questions, start, showAnswers } = quizData;
+
+  function startQuiz(category, difficulty) {
     setQuizData((prevState) => ({
       ...prevState,
       start: true,
+      category: category,
+      difficulty: difficulty,
     }));
+    fetchQuestions(setLoading, setError, setQuizData, category, difficulty);
   }
-
-  useEffect(() => {
-    fetchQuestions(setIsLoading, setError, setQuizData);
-  }, []);
 
   function selectAnswer(questionIndex, answerIndex) {
     setQuizData((prevState) => ({
@@ -43,14 +44,14 @@ function App() {
   }
 
   useEffect(() => {
-    const allComplete = quizData.questions.every(
+    const allComplete = questions.every(
       (question) => question.selected_answer !== undefined
     );
     setQuizData((prevState) => ({
       ...prevState,
       completed: allComplete,
     }));
-  }, [quizData.questions]);
+  }, [questions]);
 
   function results() {
     setQuizData((prevState) => ({
@@ -60,35 +61,33 @@ function App() {
   }
 
   function calculateScore() {
-    let correctAnswers = 0;
-    quizData.questions.forEach((question) => {
+    return questions.reduce((correctAnswers, question) => {
       const selectedOption = question.options[question.selected_answer];
       if (selectedOption === question.correct_answer) {
-        correctAnswers++;
+        return correctAnswers + 1;
       }
-    });
-    return correctAnswers;
+      return correctAnswers;
+    }, 0);
   }
 
   function resetQuiz() {
     setQuizData(initialState);
-    fetchQuestions(setIsLoading, setError, setQuizData);
   }
 
   return (
     <div>
-      {!quizData.start ? (
+      {!start ? (
         <section>
-          <Intro onClick={startQuiz} />{" "}
+          <Intro onStart={startQuiz} />
         </section>
-      ) : isLoading ? (
+      ) : loading ? (
         <LoadingComponent />
       ) : error ? (
         <ErrorComponent error={error} />
       ) : (
         <Quiz
           quizData={quizData}
-          showAnswers={quizData.showAnswers}
+          showAnswers={showAnswers}
           selectAnswer={selectAnswer}
           results={results}
           calculateScore={calculateScore}

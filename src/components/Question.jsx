@@ -20,16 +20,6 @@ export default function Question({ question, selectAnswer, showAnswers }) {
           `}
             key={index}
             onClick={() => selectAnswer(index)}
-            // style={{
-            //   backgroundColor:
-            //     showAnswers && question.correct_answer === answer
-            //       ? "#94D7A2"
-            //       : showAnswers && question.selected_answer === index
-            //       ? "#F8BCBC"
-            //       : !showAnswers && question.selected_answer === index
-            //       ? "#D6DBF5"
-            //       : "",
-            // }}
             disabled={showAnswers}
           >
             {he.decode(answer)}

@@ -1,7 +1,25 @@
-export async function fetchQuestions(setIsLoading, setError, setQuizData) {
-  setIsLoading(true);
+export async function fetchCategories() {
+  const response = await fetch("https://opentdb.com/api_category.php");
+  if (!response.ok) {
+    throw new Error("Failed to fetch category options");
+  }
+  const data = await response.json();
+  return data.trivia_categories;
+}
+
+export async function fetchQuestions(
+  setLoading,
+  setError,
+  setQuizData,
+  category,
+  difficulty
+) {
+  setLoading(true);
   try {
-    const response = await fetch("https://opentdb.com/api.php?amount=5");
+    let url = "https://opentdb.com/api.php?amount=10";
+    category ? (url += `&category=${category}`) : "";
+    difficulty ? (url += `&difficulty=${difficulty}`) : "";
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error("Failed to fetch questions");
     }
@@ -9,32 +27,28 @@ export async function fetchQuestions(setIsLoading, setError, setQuizData) {
     if (data.results.length === 0) {
       throw new Error("No questions available");
     }
+    const shuffleArray = (array) => {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    };
     setQuizData((prevState) => ({
       ...prevState,
-      questions: data.results.map((option) => {
-        const answersArray = option.incorrect_answers.concat([
-          option.correct_answer,
-        ]);
-        return {
-          question: option.question,
-          options: shuffleArray(answersArray),
-          selected_answer: undefined,
-          correct_answer: option.correct_answer,
-        };
-      }),
+      questions: data.results.map((option) => ({
+        question: option.question,
+        options: shuffleArray(
+          option.incorrect_answers.concat([option.correct_answer])
+        ),
+        selected_answer: undefined,
+        correct_answer: option.correct_answer,
+      })),
     }));
   } catch (error) {
     setError(error.message);
   } finally {
-    setIsLoading(false);
+    setLoading(false);
   }
-}
-
-function shuffleArray(array) {
-  const newArray = [...array];
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-  }
-  return newArray;
 }
