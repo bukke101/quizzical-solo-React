@@ -1,5 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
 * {
   box-sizing: border-box;
+}
+
+:root {
+  --BTN-BG-COLOR: #f5f7fb;
+  --COLOR: #293264;
 }
 
 body,
@@ -7,10 +14,14 @@ html {
   margin: 0;
 }
 body {
-  color: #293264;
+  color: var(--COLOR);
   font-family: Karla, sans-serif;
   line-height: 1.4em;
   font-size: 0.9em;
+  background: var(--BTN-BG-COLOR);
+  background-image: url("./images/blobs.png"), url("./images/blobs1.png");
+  background-repeat: no-repeat;
+  background-position: top right, bottom left;
 }
 h3 {
   font-size: 2em;
@@ -22,7 +33,7 @@ button {
   background-color: #4d5b9e;
   font-size: 1em;
   letter-spacing: 0.06em;
-  color: #f5f7fb;
+  color: var(--BTN-BG-COLOR);
   width: 193px;
   height: 52px;
   padding: 10px;
@@ -45,19 +56,10 @@ button {
   justify-content: center;
   align-items: center;
   min-height: 550px;
-  background: #f5f7fb;
-  background-image: url("./images/blobs.png"), url("./images/blobs1.png");
-  background-repeat: no-repeat;
-  background-position: top right, bottom left;
 }
-
 .quiz-container {
   display: flex;
   flex-direction: column;
-  background: #f5f7fb;
-  background-image: url("./images/blobs.png"), url("./images/blobs1.png");
-  background-repeat: no-repeat;
-  background-position: top right, bottom left;
   padding: 30px;
 }
 
@@ -77,8 +79,8 @@ button {
 }
 .options-btn {
   background: none;
-  color: #293264;
-  border: 1px solid #293264;
+  color: var(--COLOR);
+  border: 1px solid var(--COLOR);
   font-size: 0.8em;
   padding: 0;
   min-height: 10px;

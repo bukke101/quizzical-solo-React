@@ -9,7 +9,29 @@ export default function Select({
   return (
     <>
       <div>
-        <label htmlFor="category">Select A Category:</label>
+        <label htmlFor="difficulty">Select Difficulty: </label>
+        <select
+          id="difficulty"
+          value={difficulty}
+          className="select"
+          onChange={(e) =>
+            setQuizAttributes((prevState) => ({
+              ...prevState,
+              difficulty: e.target.value,
+            }))
+          }
+        >
+          <option value={null}>Any Difficulty</option>
+          {difficultyOptions.map((option) => (
+            <option key={option} value={option.toLowerCase()}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+      <br />
+      <div>
+        <label htmlFor="category">Select A Category: </label>
         <select
           id="category"
           value={category}
@@ -24,27 +46,6 @@ export default function Select({
           {categoryOptions.map((option) => (
             <option key={option.id} value={option.id}>
               {option.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <br />
-      <div>
-        <label htmlFor="difficulty">Select Difficulty:</label>
-        <select
-          id="difficulty"
-          value={difficulty}
-          onChange={(e) =>
-            setQuizAttributes((prevState) => ({
-              ...prevState,
-              difficulty: e.target.value,
-            }))
-          }
-        >
-          <option value={null}>Any Difficulty</option>
-          {difficultyOptions.map((option) => (
-            <option key={option} value={option.toLowerCase()}>
-              {option}
             </option>
           ))}
         </select>
