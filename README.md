@@ -1,14 +1,5 @@
 # Quizical WebApp
 
-## Description:
-
-Challenge your knowledge on various topics and earn points for correct answers.
-
-## Features:
-
-Extensive question bank sourced from the Open Trivia Database API.
-Personalize your quiz experience by choosing your preferred difficulty and category.
-Real-time scoring system for instant feedback and a competitive edge.
 
 ## How to Play:
 
